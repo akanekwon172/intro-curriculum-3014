@@ -18,18 +18,18 @@ const server = http.createServer((req, res) => {
         let rawData = '';
 
         req.on('data', chunk => {
-          rawData = rawData + chunk;
-        }).on('end', () => {
-          const answer = new URLSearchParams(rawData);
-          const body = `${answer.get('name')}さんは${answer.get('yaki-shabu')}に投票しました`;
-          const html = `<!DOCTYPE html>
+            rawData += chunk;
+          }).on('end', () => {
+            const answer = new URLSearchParams(rawData);
+            const body = `${answer.get('name')}さんは${answer.get('yaki-shabu')}に投票しました`;
+            const html = `<!DOCTYPE html>
             <html lang="ja">
             <body><h1>${body}</h1></body>
             </html>`;
-          console.info(`[${now}] 投稿: ${body}`);
-          res.write(html);
-          res.end();
-        });
+            console.info(`[${now}] 投稿: ${body}`);
+            res.write(html);
+            res.end();
+          });
         break;
       default:
         break;
@@ -39,6 +39,7 @@ const server = http.createServer((req, res) => {
   }).on('clientError', e => {
     console.error(`[${new Date()}] Client Error`, e);
   });
+
 const port = 8000;
 
 server.listen(port, () => {
